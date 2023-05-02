@@ -60,11 +60,19 @@ export const searchCategoriesPannel = Vue.extend({
     handleSearchResultPageBrowsing(direction: BrowseDirection): void {
         const searchResults: SearchResultItemViewModel[] = this.searchResults;
         if (searchResults.length === 0) return;
-
-        const activeSearchResult = searchResults.find((r) => r.active);
-        if (activeSearchResult === undefined) return;
+        console.log('SERACH', searchResults)
+        const activeSearchResult = searchResults.find((r) => {
+            console.log('Result', r.active ? r : false)
+            return r.active
+        });
+        console.log('ACT', activeSearchResult)
+        if (activeSearchResult === undefined) {
+            console.log('IN', activeSearchResult)
+            return
+        }
 
         const activeSearchResultIndex = searchResults.indexOf(activeSearchResult);
+        console.log('activeSearchResultIndex', activeSearchResultIndex)
         const firstVisibleSearchResultIndex = this.getIndexOfFirstVisibleSearchResult();
         const lastVisibleSearchResultIndex = this.getIndexOfLastVisibleSearchResult();
 
@@ -77,12 +85,14 @@ export const searchCategoriesPannel = Vue.extend({
                 activeSearchResultIndex < lastVisibleSearchResultIndex
                     ? lastVisibleSearchResultIndex
                     : activeSearchResultIndex + maxSearchResultsPerPage;
-        } else {
-            nextActiveIndex =
-                activeSearchResultIndex > firstVisibleSearchResultIndex &&
-                activeSearchResultIndex <= lastVisibleSearchResultIndex
+                    console.log('IF NEXT', nextActiveIndex)
+                } else {
+                    nextActiveIndex =
+                    activeSearchResultIndex > firstVisibleSearchResultIndex &&
+                    activeSearchResultIndex <= lastVisibleSearchResultIndex
                     ? firstVisibleSearchResultIndex
                     : activeSearchResultIndex - maxSearchResultsPerPage;
+                    console.log('ELSE NEXT', nextActiveIndex)
         }
 
         if (nextActiveIndex < 0) nextActiveIndex = 0;
@@ -97,6 +107,7 @@ export const searchCategoriesPannel = Vue.extend({
         if (searchResultsContainer == null) return 0;
 
         const appearanceOptions: AppearanceOptions = this.appearance;
+        console.log('INDEX', 's', searchResultsContainer.scrollTop, 'a', appearanceOptions.searchResultHeight,  searchResultsContainer.scrollTop / appearanceOptions.searchResultHeight)
         return Math.ceil(searchResultsContainer.scrollTop / appearanceOptions.searchResultHeight);
     },
     getIndexOfLastVisibleSearchResult(): number {
@@ -112,20 +123,26 @@ export const searchCategoriesPannel = Vue.extend({
         );
     },
     handleSearchResultBrowsing(direction: BrowseDirection): void {
+        console.log('INSIDE');
         const searchResults: SearchResultItemViewModel[] = this.searchResults;
+        console.log('this.searchResults', this.searchResults);
         if (searchResults.length === 0) {
             return;
         }
-
         let nextActiveIndex = 0;
 
         for (let i = 0; i < searchResults.length; i++) {
+            console.log('inside loop')
             if (searchResults[i].active) {
+                console.log('LOOP IF', searchResults[i]);
                 if (direction === BrowseDirection.Next) {
                     nextActiveIndex = i === searchResults.length - 1 ? 0 : i + 1;
+                    // console.log('IF nextActiveIndex', nextActiveIndex = i === searchResults.length - 1 ? 0 : i + 1)
                 } else {
+                    // console.log('ELSE nextActiveIndex', nextActiveIndex = i === 0 ? searchResults.length - 1 : i - 1)
                     nextActiveIndex = i === 0 ? searchResults.length - 1 : i - 1;
                 }
+                console.log('OUT');
                 searchResults[i].active = false;
                 break;
             }
@@ -175,9 +192,11 @@ export const searchCategoriesPannel = Vue.extend({
         this.update(updatedSearchResults);
     });
     vueEventDispatcher.$on(VueEventChannels.selectNextItem, () => {
+        console.log('nextitem')
         this.handleSearchResultBrowsing(BrowseDirection.Next);
     });
     vueEventDispatcher.$on(VueEventChannels.selectPreviousItem, () => {
+        console.log('previtem')
         this.handleSearchResultBrowsing(BrowseDirection.Previous);
     });
     vueEventDispatcher.$on(VueEventChannels.pageDownPress, () => {
