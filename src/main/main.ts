@@ -410,6 +410,8 @@ function updateMainWindowSize(searchResultCount: number, appearanceOptions: Appe
                           Number(appearanceOptions.userInputHeight) +
                           Number(appearanceOptions.userInputBottomMargin),
                   );
+                    console.log(windowHeight)
+                    console.log(appearanceOptions.windowWidth)
 
         mainWindow.setSize(Number(appearanceOptions.windowWidth), Number(windowHeight));
         if (center) {

@@ -24,7 +24,7 @@ export const searchResultsPanel = Vue.extend({
           },
     },
     template: `
-                <div class="search-results-pannel">
+                <div class="search-results-pannel" :class="{'result-empty' : !searchingResults.length}">
                     <div class="search-results__item" :class="{ 'active' : result.active }" v-for="(result, index) in searchingResults" :key="index">
                         <div class="search-results-item-icon-container" :class="{ 'active' : result.active }">
                             <div class="search-results__item-icon" v-html="getIcon(result.iconUrl, result.active)"></div>
@@ -37,7 +37,7 @@ export const searchResultsPanel = Vue.extend({
                         </div>
                     </div>
                     <div class="search-result__empty" v-if="!searchingResults.length">
-                        <p class="search-result__empty-text">No Search Resutl Found</p>
+                        <p class="search-result__empty-text">No Search Result Found</p>
                     </div>
                 </div>
     `,

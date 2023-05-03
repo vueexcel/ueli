@@ -4,6 +4,7 @@ import { vueEventDispatcher } from "./vue-event-dispatcher";
 import { userInputComponent } from "./user-input-component";
 import { searchResultsComponent } from "./search-results-component";
 import { searchCategoriesPannel } from "./search-categories-pannel";
+import { searchPreviewPanel } from "./search-preview-panel";
 import { searchResultsPanel } from "./search-results-panel";
 import { ipcRenderer } from "electron";
 import { IpcChannels } from "../common/ipc-channels";
@@ -68,6 +69,7 @@ import { loremIpsumSettingsComponent } from "./settings/lorem-ipsum-settings-com
 Vue.component("user-input", userInputComponent);
 Vue.component("search-results", searchResultsComponent);
 Vue.component("search-categories", searchCategoriesPannel);
+Vue.component("search-preview", searchPreviewPanel);
 Vue.component("search-results-panel", searchResultsPanel);
 Vue.component("settings", settingsComponent);
 Vue.component("general-settings", generalSettingsComponent);

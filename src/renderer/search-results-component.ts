@@ -52,11 +52,7 @@ export const searchResultsComponent = Vue.extend({
             <div class="search-results__container">
                 <search-categories :appearance="appearance" @setLoading="setIsLoading"></search-categories>
                 <search-results-panel :searchingResults="searchResults"/>
-                <div class="search-preview-pannel">
-                    <div class="search-result__empty">
-                        <p class="search-result__empty-text">No Preview Available</p>
-                    </div>
-                </div>
+                <search-preview />
             </div>
             <div v-if="isLoading" class="search-results__overlay"></div>
         </div>
