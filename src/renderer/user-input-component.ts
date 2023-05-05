@@ -69,6 +69,14 @@ export const userInputComponent = Vue.extend({
                 event.preventDefault();
                 vueEventDispatcher.$emit(VueEventChannels.tabPress);
             }
+            if (event.key === "ArrowRight") {
+                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.moveToResults);
+            }
+            if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                vueEventDispatcher.$emit(VueEventChannels.moveToCategories);
+            }
 
             if (event.key.toLowerCase() === "o" && ctrlOrMeta) {
                 vueEventDispatcher.$emit(VueEventChannels.openSearchResultLocationKeyPress);
@@ -197,6 +205,7 @@ export const userInputComponent = Vue.extend({
                 class="user-input__input"
                 type="text"
                 v-model="userInput"
+                placeholder="Search..."
                 @keydown="keyPress"
             >
             <div class="user-input__user-confirmation-container" :class="{ 'visible' : refreshIndexesIsPending && !userConfirmationDialogVisible }">
